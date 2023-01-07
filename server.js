@@ -9,6 +9,7 @@ const app = express();
 //load the quotes JSON
 const quotes = require("./quotes.json");
 
+
 // Now register handlers for some routes:
 //   /                  - Return some helpful welcome info (text)
 //   /quotes            - Should return all quotes (json)
@@ -18,6 +19,24 @@ app.get("/", function (request, response) {
 });
 
 //START OF YOUR CODE...
+app.get("/quotes", function (req, res) {
+  res.send(quotes);
+});
+app.get("/quotes/random", function (req, res) {
+  let myQuote = pickFromArray(quotes);
+  res.send(myQuote);
+});
+
+app.get("/quotes/search", function (req, res) {
+  let searchQuery = req.query.term;
+  console.log(searchQuery);
+  quotes.forEach(element => { if (
+    element.quote.toLowerCase().includes(searchQuery.toLowerCase()))
+    console.log(element.quote)
+  });
+ 
+  res.send(searchQuery);
+});
 
 //...END OF YOUR CODE
 
